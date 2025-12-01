@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, CardContent } from "@/components/ui/card"
 import { Cpu, Smartphone, Package, Printer } from "lucide-react"
 
@@ -29,6 +31,11 @@ export function Services() {
     },
   ]
 
+  const handleServiceClick = (serviceTitle: string) => {
+    // URL 해시를 변경하여 Portfolio 컴포넌트에서 감지하도록 함
+    window.location.hash = `portfolio-${encodeURIComponent(serviceTitle)}`
+  }
+
   return (
     <section id="services" className="py-20 lg:py-32 bg-secondary/30">
       <div className="container mx-auto px-4">
@@ -41,7 +48,11 @@ export function Services() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <Card 
+              key={index} 
+              className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              onClick={() => handleServiceClick(service.title)}
+            >
               <CardContent className="p-6 space-y-4">
                 <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
                   <service.icon className="h-6 w-6 text-accent" />
@@ -60,6 +71,11 @@ export function Services() {
                     ))}
                   </div>
                 </div>
+
+                {/* 클릭 안내 텍스트 */}
+                <p className="text-xs text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center pt-2">
+                  클릭하여 제작사례 보기 →
+                </p>
               </CardContent>
             </Card>
           ))}
